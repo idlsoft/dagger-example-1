@@ -1,0 +1,10 @@
+{
+  "name": "mod1",
+  "engineVersion": "v0.19.7",
+  "sdk": {
+    "source": "go"
+  },
+  "include" : [
+    "../dag-common"
+  ]
+}

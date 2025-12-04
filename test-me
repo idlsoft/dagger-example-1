@@ -1,0 +1,3 @@
+#!/bin/bash
+
+dagger -m mod1 call apt-install --packages=curl terminal
