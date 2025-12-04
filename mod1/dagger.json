@@ -4,7 +4,14 @@
   "sdk": {
     "source": "go"
   },
-  "include" : [
-    "../dag-common"
+  "include": [
+    "../dag-common",
+    "../dag-common-mod"
+  ],
+  "dependencies": [
+    {
+      "name": "dag-common-mod",
+      "source": "../dag-common-mod"
+    }
   ]
 }

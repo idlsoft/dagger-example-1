@@ -1,4 +1,4 @@
-// A generated module for Mod1 functions
+// A generated module for DagCommonMod functions
 //
 // This module has been generated via dagger init and serves as a reference to
 // basic module structure as you get started with Dagger.
@@ -16,24 +16,22 @@ package main
 
 import (
 	"context"
-	"dagger/mod-1/internal/dagger"
-	"github.com/idlsoft/dagger-example-1/dag-common"
+	"dagger/dag-common-mod/internal/dagger"
 )
 
-type Mod1 struct{}
-
-// Installs the provided apt packages into an ubuntu container
-func (m *Mod1) AptInstall(packages []string) *dagger.Container {
-	_ = dagCommon.AptInstall(packages)
-	return dag.Container().From("ubuntu:latest") // .With(dagCommon.AptInstall(packages))
-}
+type DagCommonMod struct{}
 
 // Returns a container that echoes whatever string argument is provided
-func (m *Mod1) ContainerEcho(stringArg string) *dagger.Container {
-	return dag.DagCommonMod().ContainerEcho(stringArg)
+func (m *DagCommonMod) ContainerEcho(stringArg string) *dagger.Container {
+	return dag.Container().From("alpine:latest").WithExec([]string{"echo", stringArg})
 }
 
 // Returns lines that match a pattern in the files of the provided Directory
-func (m *Mod1) GrepDir(ctx context.Context, directoryArg *dagger.Directory, pattern string) (string, error) {
-	return dag.DagCommonMod().GrepDir(ctx, directoryArg, pattern)
+func (m *DagCommonMod) GrepDir(ctx context.Context, directoryArg *dagger.Directory, pattern string) (string, error) {
+	return dag.Container().
+		From("alpine:latest").
+		WithMountedDirectory("/mnt", directoryArg).
+		WithWorkdir("/mnt").
+		WithExec([]string{"grep", "-R", pattern, "."}).
+		Stdout(ctx)
 }
